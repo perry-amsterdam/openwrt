@@ -361,7 +361,10 @@ $(KDIR)/root.%: kernel_prepare
 
 define Device/InitProfile
   PROFILES := $(PROFILE)
-  DEVICE_TITLE :=
+  DEVICE_TITLE = $$(DEVICE_VENDOR) $$(DEVICE_MODEL)$$(if $$(value DEVICE_VARIANT), $$(DEVICE_VARIANT))
+  DEVICE_VENDOR :=
+  DEVICE_MODEL :=
+  DEVICE_VARIANT :=
   DEVICE_PACKAGES :=
   DEVICE_DESCRIPTION = Build firmware images for $$(DEVICE_TITLE)
 endef

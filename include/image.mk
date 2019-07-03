@@ -553,7 +553,24 @@ define Device/Build/image
 
   $(BIN_DIR)/$(call IMAGE_NAME,$(1),$(2)): $(KDIR)/tmp/$(call IMAGE_NAME,$(1),$(2))
 	cp $$^ $$@
-
+	$(if $(CONFIG_CREATE_JSON), \
+	IMAGE_TYPE=$(word 1,$(subst ., ,$(2))) \
+			   SUPPORTED_DEVICES="$(SUPPORTED_DEVICES)" \
+			   DEVICE_ID="$(DEVICE_NAME)" \
+			   DEVICE_TITLE="$(DEVICE_TITLE)" \
+			   IMAGE_SIZE="$(IMAGE_SIZE)" \
+			   BOARD_NAME="$(BOARD_NAME)" \
+               BIN_DIR="$(BIN_DIR)" \
+               TOPDIR="$(TOPDIR)" \
+               DEVICE_NAME="$(DEVICE_NAME)" \
+               IMAGE_NAME="$(IMAGE_NAME)" \
+               TARGET="$(BOARD)" \
+               SUBTARGET="$(SUBTARGET)" \
+               DEVICE_VENDOR="$(DEVICE_VENDOR)" \
+               DEVICE_MODEL="$(DEVICE_MODEL)" \
+               DEVICE_VARIANT="$(DEVICE_VARIANT)" \
+               $(TOPDIR)/scripts/add_json.sh \
+    )
 endef
 
 define Device/Build/artifact

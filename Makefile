@@ -89,6 +89,9 @@ prereq: $(target/stamp-prereq) tmp/.prereq_packages
 checksum: FORCE
 	$(call sha256sums,$(BIN_DIR),$(CONFIG_BUILDBOT))
 
+mergejson: FORCE
+	$(SCRIPT_DIR)/merge_json.sh
+
 buildconfig: FORCE
 	echo "commit=$$($(SCRIPT_DIR)/getver.sh)" > $(BIN_DIR)/commit.buildinfo
 
@@ -105,6 +108,7 @@ prepare: .config $(tools/stamp-compile) $(toolchain/stamp-compile)
 world: prepare $(target/stamp-compile) $(package/stamp-compile) $(package/stamp-install) $(target/stamp-install) FORCE
 	$(_SINGLE)$(SUBMAKE) -r package/index
 	$(_SINGLE)$(SUBMAKE) -r checksum
+	$(if $(CONFIG_CREATE_JSON),$(_SINGLE)$(SUBMAKE) -r mergejson)
 
 .PHONY: clean dirclean prereq prepare world package/symlinks package/symlinks-install package/symlinks-clean
 

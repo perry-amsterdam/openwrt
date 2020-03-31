@@ -107,8 +107,6 @@ define add_jffs2_mark
 	echo -ne '\xde\xad\xc0\xde' >> $(1)
 endef
 
-PROFILE_SANITIZED := $(call tolower,$(subst DEVICE_,,$(subst $(space),-,$(PROFILE))))
-
 define split_args
 $(foreach data, \
 	$(subst |,$(space),\

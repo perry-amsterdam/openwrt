@@ -4,6 +4,7 @@ use lib "$FindBin::Bin";
 use strict;
 use metadata;
 use Getopt::Long;
+use List::MoreUtils qw(uniq);
 
 sub target_config_features(@) {
 	my $ret;
@@ -426,7 +427,7 @@ sub gen_profile_mk() {
 	my @targets = parse_target_metadata($file);
 	foreach my $cur (@targets) {
 		next unless $cur->{id} eq $target;
-		print "PROFILE_NAMES = ".join(" ", map { $_->{id} } @{$cur->{profiles}})."\n";
+		print "PROFILE_NAMES = ".join(" ", uniq map { $_->{id} } @{$cur->{profiles}})."\n";
 		foreach my $profile (@{$cur->{profiles}}) {
 			print $profile->{id}.'_NAME:='.$profile->{name}."\n";
 			print $profile->{id}.'_HAS_IMAGE_METADATA:='.$profile->{has_image_metadata}."\n";

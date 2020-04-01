@@ -443,6 +443,9 @@ sub gen_profile_mk() {
 				print $profile->{id}.'_SUPPORTED_DEVICES:='.join(' ', @{$profile->{supported_devices}})."\n";
 			}
 			print $profile->{id}.'_PACKAGES:='.join(' ', @{$profile->{packages}})."\n";
+			if (defined($profile->{altnames}) and @{$profile->{altnames}} > 0) {
+				print $profile->{id}.'_ALT_NAMES:='.join(' ', @{$profile->{altnames}})."\n";
+			}
 		}
 	}
 }

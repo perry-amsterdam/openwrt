@@ -634,6 +634,7 @@ endef
 define Device/DumpInfo
 Target-Profile: DEVICE_$(1)
 Target-Profile-Name: $(DEVICE_DISPLAY)
+Target-Profile-AltNames: $(if $(strip $(DEVICE_ALT0_TITLE)),"$(DEVICE_ALT0_TITLE)")$(if $(strip $(DEVICE_ALT1_TITLE)), "$(DEVICE_ALT1_TITLE)")$(if $(strip $(DEVICE_ALT2_TITLE)), "$(DEVICE_ALT2_TITLE)")
 Target-Profile-Packages: $(DEVICE_PACKAGES)
 Target-Profile-hasImageMetadata: $(if $(foreach image,$(IMAGES),$(findstring append-metadata,$(IMAGE/$(image)))),1,0)
 Target-Profile-SupportedDevices: $(SUPPORTED_DEVICES)

@@ -9,7 +9,7 @@ preinit_set_mac_address() {
 	. /lib/functions.sh
 
 	case $(board_name) in
-	linksys,caiman|linksys,cobra|linksys,rango|linksys,shelby|linksys,venom)
+	linksys,caiman|linksys,cobra|linksys,wrt3200acm|linksys,shelby|linksys,venom)
 		# rename interfaces back to the way they were with 4.4
 		case "$(readlink /sys/class/net/eth0)" in
 			*f1070000*)

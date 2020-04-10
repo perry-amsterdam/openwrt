@@ -7,7 +7,7 @@ boot() {
 	linksys,caiman |\
 	linksys,cobra |\
 	linksys,mamba |\
-	linksys,rango |\
+	linksys,wrt3200acm |\
 	linksys,shelby |\
 	linksys,venom)
 		mtd resetbc s_env || true

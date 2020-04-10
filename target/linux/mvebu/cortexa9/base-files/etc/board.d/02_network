@@ -18,7 +18,7 @@ cznic,turris-omnia)
 linksys,caiman|\
 linksys,cobra|\
 linksys,mamba|\
-linksys,rango|\
+linksys,wrt3200acm|\
 linksys,shelby|\
 linksys,venom)
 	ucidef_set_interfaces_lan_wan "eth0.1" "eth1.2"

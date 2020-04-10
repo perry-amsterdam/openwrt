@@ -30,7 +30,7 @@ platform_do_upgrade() {
 	linksys,caiman|\
 	linksys,cobra|\
 	linksys,mamba|\
-	linksys,rango|\
+	linksys,wrt3200acm|\
 	linksys,shelby|\
 	linksys,venom)
 		platform_do_upgrade_linksys "$1"
@@ -50,7 +50,7 @@ platform_copy_config() {
 	linksys,caiman|\
 	linksys,cobra|\
 	linksys,mamba|\
-	linksys,rango|\
+	linksys,wrt3200acm|\
 	linksys,shelby|\
 	linksys,venom)
 		platform_copy_config_linksys

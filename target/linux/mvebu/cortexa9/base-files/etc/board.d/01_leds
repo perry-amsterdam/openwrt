@@ -14,7 +14,7 @@ boardname="${board##*,}"
 case "$board" in
 linksys,caiman|\
 linksys,cobra|\
-linksys,rango|\
+linksys,wrt3200acm|\
 linksys,shelby)
 	ucidef_set_led_netdev "wan" "WAN" "pca963x:$boardname:white:wan" "eth1"
 	ucidef_set_led_usbport "usb1" "USB 1" "pca963x:$boardname:white:usb2" "usb1-port1"

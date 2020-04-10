@@ -98,9 +98,9 @@ define Device/linksys_wrt3200acm
   DEVICE_MODEL := WRT3200ACM
   DEVICE_ALT0_VENDOR := Linksys
   DEVICE_ALT0_MODEL := Rango
-  DEVICE_DTS := armada-385-linksys-rango
+  DEVICE_DTS := armada-385-linksys-wrt3200acm
   DEVICE_PACKAGES += kmod-btmrvl kmod-mwifiex-sdio mwlwifi-firmware-88w8964
-  SUPPORTED_DEVICES := armada-385-linksys-rango linksys,rango
+  SUPPORTED_DEVICES := linksys,wrt3200acm armada-385-linksys-rango linksys,rango
 endef
 TARGET_DEVICES += linksys_wrt3200acm
 

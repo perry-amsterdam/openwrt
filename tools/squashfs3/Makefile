@@ -1,21 +1,22 @@
-# 
-# Copyright (C) 2006-2012 OpenWrt.org
+#
+# Copyright (C) 2006-2020 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
 #
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=squashfs
+PKG_NAME:=squashfs3
 PKG_CPE_ID:=cpe:/a:phillip_lougher:squashfs
 PKG_VERSION:=3.0
+PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)$(PKG_VERSION).tar.gz
+PKG_SOURCE:=squashfs$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=@SF/squashfs
 PKG_HASH:=39dbda43cf118536deb746c7730b468702d514a19f4cfab73b710e32908ddf20
 PKG_CAT:=zcat
 
-HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/$(PKG_NAME)$(PKG_VERSION)
+HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/squashfs$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/host-build.mk
 
@@ -25,7 +26,7 @@ define Host/Compile
 		CFLAGS="$(HOST_CFLAGS) -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -I." \
 		CXX="$(CXX)" \
 		LZMAPATH=$(STAGING_DIR_HOST)/lib \
-		mksquashfs-lzma unsquashfs-lzma 
+		mksquashfs-lzma unsquashfs-lzma
 endef
 
 define Host/Install

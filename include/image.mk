@@ -234,11 +234,16 @@ endef
 $(eval $(foreach S,$(JFFS2_BLOCKSIZE),$(call Image/mkfs/jffs2/template,$(S))))
 $(eval $(foreach S,$(NAND_BLOCKSIZE),$(call Image/mkfs/jffs2-nand/template,$(S))))
 
+# use tar2sqfs because gensquashfs lacks the owned by root feature
 define Image/mkfs/squashfs
-	$(STAGING_DIR_HOST)/bin/mksquashfs4 $(call mkfs_target_dir,$(1)) $@ \
-		-nopad -noappend -root-owned \
-		-comp $(SQUASHFSCOMP) $(SQUASHFSOPT) \
-		-processors 1
+	tar \
+		-c \
+		--sort=name \
+		--owner=0 \
+		--group=0 \
+		--numeric-owner \
+		-C $(call mkfs_target_dir,$(1)) . | \
+	$(STAGING_DIR_HOST)/bin/tar2sqfs -d uid=0,gid=0,mtime=0 -f $@
 endef
 
 # $(1): board name

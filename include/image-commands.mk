@@ -402,11 +402,14 @@ metadata_json = \
 
 define Build/append-metadata
 	$(if $(SUPPORTED_DEVICES),-echo $(call metadata_json,$(SUPPORTED_DEVICES)) | fwtool -I - $@)
-	[ ! -s "$(BUILD_KEY).sec" -o ! -s "$(BUILD_KEY).ucert" -o ! -s "$@" ] || { \
-		cp "$(BUILD_KEY).ucert" "$@.ucert" ;\
-		signify -S -m "$@" -s "$(BUILD_KEY).sec" -x "$@.sig" ;\
-		ucert -A -c "$@.ucert" -x "$@.sig" ;\
-		fwtool -S "$@.ucert" "$@" ;\
+	[ -z "$(SIGNED_IMAGES)" \
+		-o ! -s "$(BUILD_KEY).sec" \
+		-o ! -s "$(BUILD_KEY).ucert" \
+		-o ! -s "$@" ] || { \
+			cp "$(BUILD_KEY).ucert" "$@.ucert" ;\
+			signify -S -m "$@" -s "$(BUILD_KEY).sec" -x "$@.sig" ;\
+			ucert -A -c "$@.ucert" -x "$@.sig" ;\
+			fwtool -S "$@.ucert" "$@" ;\
 	}
 endef
 

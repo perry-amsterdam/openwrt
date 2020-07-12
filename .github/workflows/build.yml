@@ -1,8 +1,8 @@
 name: Build OpenWrt snapshot
 
 on:
-  schedule:
-    - cron: "0 0 * * *"
+  push
+
 
 jobs:
   determine_targets:
@@ -15,7 +15,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
       with:
-        repository: "https://github.com/openwrt/openwrt.git"
+        repository: "openwrt/openwrt"
 
 
     - name: Find targets
@@ -43,14 +43,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: False
-      matrix: ${{fromJson(needs.determine_targets.outputs.targets)}}
+      matrix:
+        targets:
+        - ath79/generic
+      #matrix: ${{fromJson(needs.determine_targets.outputs.targets)}}
 
     steps:
     - name: Checkout
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
-        repository: "https://github.com/openwrt/openwrt.git"
+        repository: "openwrt/openwrt"
 
     - name: Cache sources
       uses: davidsbond/cache@master
@@ -68,6 +71,16 @@ jobs:
         SUBTARGET=$(echo ${{ matrix.targets }} | cut -d "/" -f 2)
         echo "::set-env name=TARGET::$TARGET"
         echo "::set-env name=SUBTARGET::$SUBTARGET"
+
+    - name: Setup signing key
+      run: |
+        echo "$SIGNKEY_SEC" > key-build
+        echo "$SIGNKEY_PUB" > key-build.pub
+        echo "$SIGNKEY_UCERT" | base64 -d > key-build.ucert
+      env:
+        SIGNKEY_SEC: ${{ secrets.SIGNKEY_SEC }}
+        SIGNKEY_PUB: ${{ secrets.SIGNKEY_PUB }}
+        SIGNKEY_UCERT: ${{ secrets.SIGNKEY_UCERT }}
 
     - name: Update & Install feeds
       run: |
@@ -133,7 +146,7 @@ jobs:
         make package/install -j$(nproc) || \
           make package/install V=s
 
-        make package/index CONFIG_SIGNED_PACKAGES= V=s
+        make package/index V=s
 
     - name: Add kmods feed
       run: |

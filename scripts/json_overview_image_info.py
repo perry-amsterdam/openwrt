@@ -2,7 +2,7 @@
 
 from os import getenv, environ
 from pathlib import Path
-from subprocess import run, PIPE
+from subprocess import run
 from sys import argv
 import json
 
@@ -42,11 +42,10 @@ if output:
             "val.DEFAULT_PACKAGES",
             "val.ARCH_PACKAGES",
         ],
-        stdout=PIPE,
-        stderr=PIPE,
+        capture_output=True,
         check=True,
         env=environ.copy().update({"TOPDIR": Path().cwd()}),
-        universal_newlines=True,
+        text=True,
     ).stdout.splitlines()
 
     output["default_packages"] = default_packages.split()

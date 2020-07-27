@@ -18,7 +18,7 @@ use Encode qw(decode encode);
 my $P = $0;
 my $D = dirname(abs_path($P));
 
-my $V = '0.32';
+my $V = '0.32-openwrt';
 
 use Getopt::Long qw(:config no_auto_abbrev);
 
@@ -328,14 +328,14 @@ if ($terse) {
 
 if ($tree) {
 	if (defined $root) {
-		if (!top_of_kernel_tree($root)) {
+		if (!top_of_openwrt_tree($root)) {
 			die "$P: $root: --root does not point at a valid tree\n";
 		}
 	} else {
-		if (top_of_kernel_tree('.')) {
+		if (top_of_openwrt_tree('.')) {
 			$root = '.';
 		} elsif ($0 =~ m@(.*)/scripts/[^/]*$@ &&
-						top_of_kernel_tree($1)) {
+						top_of_openwrt_tree($1)) {
 			$root = $1;
 		}
 	}
@@ -1108,13 +1108,13 @@ EOM
 
 exit($exit);
 
-sub top_of_kernel_tree {
+sub top_of_openwrt_tree {
 	my ($root) = @_;
 
 	my @tree_check = (
-		"COPYING", "CREDITS", "Kbuild", "MAINTAINERS", "Makefile",
-		"README", "Documentation", "arch", "include", "drivers",
-		"fs", "init", "ipc", "kernel", "lib", "scripts",
+		"BSDmakefile", "Config.in", "LICENSE", "Makefile", "README",
+		"feeds.conf.default", "include", "package", "rules.mk",
+		"scripts", "target", "toolchain", "tools"
 	);
 
 	foreach my $check (@tree_check) {
